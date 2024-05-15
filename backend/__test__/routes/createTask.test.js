@@ -7,16 +7,19 @@ import app from '../../app.js'
 const route = '/task';
 
 const requests = {
-    createTask: () => Request(app).post(route).send({
-        title: 'title',
-        description: 'task description',
-    }),
-    titleRequired: () => Request(app).post(route).send({
-        description: 'task description',
-    }),
-    descriptionRequired: () => Request(app).post(route).send({
-        title: 'title',
-    }),
+    createTask: (token) => Request(app).post(route)
+        .set('Cookie', `token=${token}`).send({
+            title: 'title',
+            description: 'task description',
+        }),
+    titleRequired: (token) => Request(app).post(route)
+        .set('Cookie', `token=${token}`).send({
+            description: 'task description',
+        }),
+    descriptionRequired: (token) => Request(app).post(route)
+        .set('Cookie', `token=${token}`).send({
+            title: 'title',
+        }),
 };
 
 let mongoDBServer;
@@ -38,7 +41,14 @@ afterAll(async () => {
 describe('Create task route', () => {
     let responses;
     beforeAll(async () => {
-        responses = await Promise.allSettled(Object.values(requests).map(req => req()));
+        const user = await DB.user.create({
+            fullname: 'test',
+            email: 'user@gmail.com',
+            password: 'passwordsecret'
+        });
+
+        const token = user.getJwtToken();
+        responses = await Promise.allSettled(Object.values(requests).map(req => req(token)));
     });
 
     test('It should create a new task', () => {
