@@ -24,4 +24,25 @@ const createTask = async (req, res, next) => {
     }
 };
 
-export { createTask };
+const deleteTask = async (req, res, next) => {
+    try {
+        Task.findByIdAndDelete(req.body.taskId);
+        const user = await User.findById(req.userId);
+        user.tasks.filter(id => id !== req.body.taskId);
+        await user.save();
+
+        res.status(200).send({
+            success: true,
+            data: {
+                message: 'task deleted',
+                tasks: user.tasks
+            },
+            error: null,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+export { createTask, deleteTask };
