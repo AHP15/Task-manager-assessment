@@ -7,20 +7,27 @@ import app from '../../app.js';
 const route = '/auth/signup';
 const requests = {
     signup: () => Request(app).post(route).send({
+        fullname: 'test',
         email: 'test@gmail.com',
         password: 'passwordsecret'
     }),
+
     emailRequired: () => Request(app).post(route).send({
+        fullname: 'test',
         password: 'passwordsecret'
     }),
     passwordRequired: () => Request(app).post(route).send({
+        fullname: 'test',
         email: 'test@gmail.com'
     }),
+
     validateEmail: () => Request(app).post(route).send({
+        fullname: 'test',
         email: 'testinvalid',
         password: 'passwordsecret'
     }),
     validatePassword: () => Request(app).post(route).send({
+        fullname: 'test',
         email: 'test@gmail.com',
         password: '123456'
     })
@@ -32,6 +39,9 @@ beforeAll(async () => {
     const mongoUri = mongoDBServer.getUri();
 
     DB.connect(mongoUri);
+    process.env.JWT_EXPIRE = 86400
+
+    process.env.JWT_SECRET = 'secret'
 });
 
 afterAll(async () => {

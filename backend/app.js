@@ -1,6 +1,26 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
+
+import UserRouter from './routes/user.js';
+import CustomError from './utils/customError.js';
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 app.get('/', (req, res) => res.status(200).send({ message: 'Hello' }));
+
+app.use(UserRouter);
+
+app.use((err, req, res, _) => {
+    const custom = new CustomError(err.message);
+    res.status(custom.statusCode).send({
+        success: false,
+        data: null,
+        error: custom.message
+    });
+});
 
 export default app;
