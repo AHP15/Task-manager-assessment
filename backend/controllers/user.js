@@ -74,4 +74,19 @@ const signin = async (req, res, next) => {
     }
 };
 
-export { signup, signin };
+const gerUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.userId).populate('tasks');
+        res.status(200).send({
+            success: true,
+            data: {
+                user
+            },
+            error: null
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export { signup, signin, gerUser };
