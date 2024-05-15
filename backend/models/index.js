@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
+import User from './user.js';
+
+
 let isConnected = false;
 const DB = {
+    user: User,
     connect(uri) {
         if (isConnected) return;
 
