@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
         minlength: [8, 'Password must be at least 8 characters'],
         select: false,
     },
+    tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
     createdAt: {
         type: Date,
         default: Date.now
