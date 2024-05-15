@@ -1,25 +1,22 @@
-import { useState } from 'react'
 import './App.css'
+import { StateType, useAppContext } from './context';
+import Loading from './components/Loading';
+import Form from './components/Loading';
+import Home from './components/Loading';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const state: StateType = useAppContext() as StateType;
 
-  return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  if (state.loading) {
+    return <Loading />
+  }
+
+  if (!state.loading && !state.user) {
+    return <Form />
+  }
+
+  return <Home />
 }
 
-export default App
+export default App;
