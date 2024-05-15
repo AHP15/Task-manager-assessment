@@ -1,5 +1,5 @@
 import { signup, signin, gerUser } from '../controllers/user.js';
-import verifyToken from '../middlewares/jwt.js';
+import { verifyToken } from '../middlewares/jwt.js';
 
 import express from 'express';
 

@@ -80,7 +80,11 @@ const gerUser = async (req, res, next) => {
         res.status(200).send({
             success: true,
             data: {
-                user
+                user: {
+                    fullname: user.fullname,
+                    email: user.email
+                },
+                tasks: user.tasks
             },
             error: null
         });

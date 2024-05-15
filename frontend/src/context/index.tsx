@@ -1,13 +1,18 @@
 import {
     createContext,
     useContext,
+    useEffect,
     useReducer
 } from 'react';
 
 import React from 'react';
 
 import App from '../App';
-
+import request from '../request.ts';
+import {
+    USER_SHOULD_SIGNIN,
+    SET_USER
+} from './actions.ts'
 
 // types
 type Task = {
@@ -42,8 +47,8 @@ const initialState: StateType = {
 
 const AppContext = createContext<Context>({ state: initialState });
 
-export function useAppContext(selector?: (state: StateType) => unknown) {
-    return selector ? selector(useContext(AppContext).state) : useContext(AppContext).state;
+export function useAppContext() {
+    return useContext(AppContext).state;
 }
 
 export function useDispatch(): React.Dispatch<Action> {
@@ -51,8 +56,20 @@ export function useDispatch(): React.Dispatch<Action> {
 }
 
 
-function reducer(state: StateType, action: Action): StateType {
+function stateReducer(state: StateType, action: Action): StateType {
     switch (action.type) {
+        case SET_USER:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload.user,
+                tasks: action.payload.tasks
+            };
+        case USER_SHOULD_SIGNIN:
+            return {
+                ...state,
+                loading: false,
+            };
         default:
             return state;
     }
@@ -60,7 +77,23 @@ function reducer(state: StateType, action: Action): StateType {
 
 type AppComponent = React.ReactElement<unknown, React.JSXElementConstructor<typeof App>>;
 export default function ContextProvider({ children }: { children: AppComponent }) {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(stateReducer, initialState);
+
+    async function getUser() {
+        const res = await request('/user', {
+            method: 'get'
+        });
+        if (res.success) {
+            dispatch({ type: SET_USER, payload: res.data });
+        } else {
+            dispatch({ type: USER_SHOULD_SIGNIN });
+        }
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
     return (
         <AppContext.Provider value={{ state, dispatch }}>
             {children}
