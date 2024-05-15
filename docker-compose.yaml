@@ -10,6 +10,8 @@ services:
       - JWT_SECRET=secret
     depends_on:
       - mongo
+    volumes:
+      - ./backend:/app/backend
   frontend:
     build:
       context: .
@@ -18,6 +20,8 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+    volumes:
+      - ./frontend:/app/frontend
   mongo:
     image: mongo:latest
     ports:
