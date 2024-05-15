@@ -45,4 +45,21 @@ const deleteTask = async (req, res, next) => {
 };
 
 
-export { createTask, deleteTask };
+const updateTask = async (req, res, next) => {
+    try {
+        const { taskId, updatedTask } = req.body;
+        const task = await Task.findByIdAndUpdate(taskId, updatedTask);
+        res.status(200).send({
+            success: true,
+            data: {
+                message: 'task updated',
+                task
+            },
+            error: null,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export { createTask, deleteTask, updateTask };
