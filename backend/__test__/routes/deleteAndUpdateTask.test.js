@@ -9,7 +9,15 @@ const route = '/task';
 const requests = {
     deleteTask: (token, id) => Request(app).delete(route)
         .set('Cookie', `token=${token}`).send({
-            id
+            taskId: id
+        }),
+    updateTask: (token, id) => Request(app).put(route)
+        .set('Cookie', `token=${token}`).send({
+            taskId: id,
+            updatedTask: {
+                title: 'updated title',
+                description: 'updated description',
+            }
         }),
 };
 
@@ -58,6 +66,16 @@ describe('Delete task route', () => {
         expect(statusCode).toBe(200);
         expect(body.success).toBe(true);
         expect(body.data.message).toBe('task deleted');
+        expect(body.error).toBe(null);
+    });
+
+    test('It should update a task', async () => {
+        const res = responses[1];
+        const { statusCode, body } = res.value;
+
+        expect(statusCode).toBe(200);
+        expect(body.success).toBe(true);
+        expect(body.data.message).toBe('task updated');
         expect(body.error).toBe(null);
     });
 });
