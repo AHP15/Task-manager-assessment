@@ -1,11 +1,13 @@
 import mongoose from 'mongoose';
 
 import User from './user.js';
+import Task from './task.js';
 
 
 let isConnected = false;
 const DB = {
     user: User,
+    task: Task,
     connect(uri) {
         if (isConnected) return;
 
