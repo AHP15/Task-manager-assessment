@@ -39,7 +39,8 @@ const signin = async (req, res, next) => {
             throw new Error('Validation failed: No password provided')
         }
 
-        const user = await User.findOne({ email: req.body.email }).select("+password");
+        const user = await User.findOne({ email: req.body.email })
+            .select("+password").populate("tasks");
 
         if (!user) {
             throw new Error(`user with email ${req.body.email} not found`);
