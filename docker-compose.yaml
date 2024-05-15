@@ -8,6 +8,7 @@ services:
     environment:
       - MONGO_URI=mongodb://mongo:27017/task_manager
       - JWT_SECRET=secret
+      - JWT_EXPIRE=86400
     depends_on:
       - mongo
     volumes:
