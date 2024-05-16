@@ -3,7 +3,7 @@ type Options = {
     body?: string,
     headers?: {
         'Content-Type': 'application/json';
-    }
+    },
 };
 
 
@@ -16,7 +16,7 @@ const base = 'http://localhost:8080';
 
 export default async function request(url: string, options: Options): Promise<Response> {
     try {
-        const res = await fetch(base + url, options);
+        const res = await fetch(base + url, { ...options, credentials: 'include' });
         return res.json();
     } catch (err) {
         if (err instanceof Error) {
