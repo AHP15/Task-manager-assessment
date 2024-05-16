@@ -60,7 +60,6 @@ const signin = async (req, res, next) => {
         }
 
         const token = user.getJwtToken();
-        console.log(process.env.JWT_EXPIRE, token)
 
         const options = {
             expires: new Date(

@@ -11,7 +11,8 @@ import App from '../App';
 import request from '../request.ts';
 import {
     USER_SHOULD_SIGNIN,
-    SET_USER
+    SET_USER,
+    ADD_TASK
 } from './actions.ts'
 
 // types
@@ -69,6 +70,11 @@ function stateReducer(state: StateType, action: Action): StateType {
             return {
                 ...state,
                 loading: false,
+            };
+        case ADD_TASK:
+            return {
+                ...state,
+                tasks: [...state.tasks, action.payload.task]
             };
         default:
             return state;
