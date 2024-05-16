@@ -1,13 +1,20 @@
-import { useAppContext } from '../context';
+import request, { Response } from '../request';
 import styles from '../styles/Home.module.css';
 
 const Header = () => {
-    const state = useAppContext();
+    const signout = async () => {
+        const res: Response = await request('/auth/signout', {
+            method: 'get'
+        });
 
+        if (res.success) {
+            window.location.reload();
+        }
+    }
     return (
         <header className={styles.header}>
             <h1>Task Manager</h1>
-            <p className={styles.username}>{state.user?.fullname}</p>
+            <button onClick={signout} className={styles.signotBtn}>Signout</button>
         </header>
     );
 };

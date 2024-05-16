@@ -7,7 +7,6 @@ const Form = () => {
     const [signin, setSignin] = useState(true);
     return (
         <div className={styles.formPage}>
-
             {signin ? <Signin /> : <Signup />}
             <p className={styles.switchForm} onClick={() => setSignin(prev => !prev)}>
                 {signin ? 'SignUp' : 'SignIn'}

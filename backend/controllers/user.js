@@ -87,6 +87,16 @@ const signin = async (req, res, next) => {
     }
 };
 
+const signout = async (req, res, next) => {
+    try {
+        res.clearCookie('token').send({
+            success: true,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 const gerUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.userId).populate('tasks');
@@ -106,4 +116,4 @@ const gerUser = async (req, res, next) => {
     }
 };
 
-export { signup, signin, gerUser };
+export { signup, signin, gerUser, signout };
