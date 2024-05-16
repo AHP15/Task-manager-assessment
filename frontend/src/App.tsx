@@ -7,7 +7,6 @@ import Home from './components/Home';
 
 function App() {
   const state: StateType = useAppContext();
-  console.log(state);
 
   // note: React-router would also work here (for larger apps)
 

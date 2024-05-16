@@ -84,7 +84,7 @@ const CreateTask = () => {
     return (
         <form onSubmit={handleSubmit}>
             <h2>Create Task</h2>
-            {task.error && <p className={styles.serverError}>{task.error}</p>}
+            {task.error && <p title='error' className={styles.serverError}>{task.error}</p>}
             <Input
                 options={{
                     type: 'text',
