@@ -14,12 +14,18 @@ appealing user interface. Each task have attributes like title, description, and
 
 In the root directory, run the this command:
 
-```bash docker compose up```
+```bash
+docker compose up
+```
 
 # Running Tests:
 
 - For backend:
-```bash cd backend && npm test ```
+```bash
+cd backend && npm test
+```
 
 - For fontend:
-```bash cd frontend && npm test ```
+```bash
+cd frontend && npm test
+```
