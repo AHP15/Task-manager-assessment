@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useAppContext, useDispatch } from '../context';
+import { useEffect, useState } from 'react';
+import { Task, useAppContext, useDispatch } from '../context';
 import styles from '../styles/Home.module.css';
 import Updatetask from './Updatetask';
 import request, { Response } from '../request';
@@ -53,12 +53,38 @@ const TaskRow = (
 
 const Tasks = () => {
     const state = useAppContext();
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [status, setStatus] = useState('all');
+
+
+    useEffect(() => {
+        if (status === 'all') {
+            return setTasks(state.tasks);
+        }
+        if (status === 'pending') {
+            return setTasks([...state.tasks.filter(task => task.status !== 'completed')]);
+        }
+        if (status === 'completed') {
+            return setTasks([...state.tasks.filter(task => task.status !== 'pending')]);
+        }
+    }, [status, state.tasks]);
 
     return (
         <div className={styles.tasks}>
             <h2>My Tasks</h2>
-            {state.tasks.length === 0 && <p>No Task create.</p>}
-            {state.tasks.map(task => (
+            {state.tasks.length === 0 ? <p>No Task created.</p> : (
+                <label>
+                    Filter Tasks:
+                    <select className={styles.selectStatus} onChange={(e) => setStatus(e.target.value)}>
+                        <option value="all">Show all</option>
+                        <option value="pending">Show pending only</option>
+                        <option value="completed">Show completed only</option>
+                    </select>
+                </label>
+            )}
+
+
+            {tasks.map(task => (
                 <TaskRow
                     key={task._id}
                     id={task._id}
