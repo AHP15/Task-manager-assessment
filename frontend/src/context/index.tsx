@@ -12,11 +12,14 @@ import request from '../request.ts';
 import {
     USER_SHOULD_SIGNIN,
     SET_USER,
-    ADD_TASK
+    ADD_TASK,
+    UPDATE_TASK,
+    DELETE_TASK
 } from './actions.ts'
 
 // types
-type Task = {
+export type Task = {
+    _id: string,
     title: string,
     description: string,
     status: string
@@ -70,6 +73,22 @@ function stateReducer(state: StateType, action: Action): StateType {
             return {
                 ...state,
                 loading: false,
+            };
+        case UPDATE_TASK:
+            const updatetasks = state.tasks.map(task => {
+                if (task._id === action.payload.task._id) {
+                    return action.payload.task;
+                }
+                return task;
+            });
+            return {
+                ...state,
+                tasks: [...updatetasks]
+            }
+        case DELETE_TASK:
+            return {
+                ...state,
+                tasks: action.payload.tasks
             };
         case ADD_TASK:
             return {
