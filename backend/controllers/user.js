@@ -13,14 +13,21 @@ const signup = async (req, res, next) => {
                 Date.now() + parseFloat(process.env.JWT_EXPIRE * 1000)
             ),
             httpOnly: true,
-            sameSite: 'strict'
+            domain: 'localhost',
+            path: '/',
+            sameSite: 'Lax',
         };
 
         res.status(201).cookie('token', token, options).send({
             success: true,
             data: {
                 message: 'user created',
-                user
+                user: {
+                    fullname: user.fullname,
+                    email: user.email
+                },
+                tasks: user.tasks
+
             },
             error: null,
         });
@@ -53,19 +60,26 @@ const signin = async (req, res, next) => {
         }
 
         const token = user.getJwtToken();
+        console.log(process.env.JWT_EXPIRE, token)
 
         const options = {
             expires: new Date(
                 Date.now() + parseFloat(process.env.JWT_EXPIRE * 1000)
             ),
             httpOnly: true,
-            sameSite: 'strict'
+            domain: 'localhost',
+            path: '/',
+            sameSite: 'Lax'
         };
 
         res.status(200).cookie('token', token, options).send({
             success: true,
             data: {
-                user: { ...user, password: null }
+                user: {
+                    fullname: user.fullname,
+                    email: user.email
+                },
+                tasks: user.tasks
             },
             error: null
         });
