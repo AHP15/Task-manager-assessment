@@ -1,0 +1,13 @@
+{
+    "success": true,
+    "data": {
+        "message": "task created",
+        "task": {
+            "_id": "1234",
+            "title": "New Task",
+            "description": "New task description",
+            "status": "pending"
+        }
+    },
+    "error": null
+}

@@ -1,0 +1,8 @@
+{
+    "success": true,
+    "data": {
+        "message": "task deleted",
+        "tasks": []
+    },
+    "error": null
+}

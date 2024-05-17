@@ -1,0 +1,13 @@
+{
+    "success": true,
+    "data": {
+        "message": "task updated",
+        "task": {
+            "_id": "1",
+            "title": "Updated Task",
+            "description": "Updated task description",
+            "status": "completed"
+        }
+    },
+    "error": null
+}

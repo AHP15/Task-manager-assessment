@@ -1,0 +1,12 @@
+{
+    "success": true,
+    "data": {
+        "message": "user created",
+        "user": {
+            "fullname": "Test User",
+            "email": "test@example.com"
+        },
+        "tasks": []
+    },
+    "error": null
+}

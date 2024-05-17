@@ -27,5 +27,5 @@ cd backend && npm test
 
 - For fontend:
 ```bash
-cd frontend && npm test
+cd frontend && npm run cypress:open
 ```

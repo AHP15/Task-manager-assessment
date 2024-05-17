@@ -1,0 +1,18 @@
+{
+    "success": true,
+    "data": {
+        "user": {
+            "fullname": "test@example.com",
+            "email": "test"
+        },
+        "tasks": [
+            {
+                "_id": "12345",
+                "title": "title",
+                "description": "description",
+                "status": "pending"
+            }
+        ]
+    },
+    "error": null
+}
